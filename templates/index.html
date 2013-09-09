@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+	<head>
+		<title>reddit.radio</title>
+
+		<link href="/media/css/normalize.css" rel="stylesheet" type="text/css">
+		<link href="/media/css/radio.css" rel="stylesheet" type="text/css">
+
+		<script language="javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+		<script language="javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.1/underscore-min.js"></script>
+		<script language="javascript" src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min.js"></script>
+
+		<script language="javascript" src="/media/js/radio.js"></script>
+	</head>
+
+	<body>
+		<h1></h1>
+		<div id="player"></div>
+		<div id="status"></div>
+
+		<div id="tools">
+			<a href="#prev" class="button prev" id="prev" title="Previous">&larr;</a>
+			
+			<select id="sub-selector">
+				<option value="/r/music">/r/music</option>
+				<option value="/r/listentothis">/r/listentothis</option>
+				<option value="/r/folk">/r/folk</option>
+				<option value="/r/folkrock">/r/folkrock</option>
+				<option value="/r/chillout">/r/chillout</option>
+				<option value="/r/dubstep">/r/dubstep</option>
+			</select>
+
+			<a href="#next" class="button next" id="next" title="Next">&rarr;</a>
+		</div>
+	</body>
+</html>
