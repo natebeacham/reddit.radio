@@ -10,39 +10,50 @@ class Radio extends Backbone.View
 		@load()
 
 	load: ->
+		@block()
 		sub = $('#sub-selector').val()
 		@getJSON sub
 
 	getJSON: (sub) ->
-		$.getJSON 'http://www.reddit.com' + sub + '/.json?jsonp=?', (response) =>
+		$.getJSON 'http://www.reddit.com' + sub + '/.json?limit=100&jsonp=?', (response) =>
 			@loadResult response.data.children
 
 	loadResult: (items) ->
-		@items = (item.data for item in items when item.data.url.indexOf 'youtub' != -1)
-		console.log @items
+		@items = (item.data for item in items when item.data.url.indexOf('youtub') != -1)
 		@current = 0
 		@play()
 
+	block: ->
+		$('#shade').fadeIn()
+
+	unblock: ->
+		$('#shade').fadeOut()
+
 	play: ->
-		$('#player').empty()
-		console.log @items[@current]
+		$('#player').empty().append '<div id="video"></div>'
+
 		$('h1').html(@items[@current].title)
+
 		$('#status').html('Playing ' + (@current + 1) + ' of ' + @items.length)
 
 		id = @getID @items[@current].url
 
 		if id
-			$('#player').append '''
-				<iframe width="100%" id="yt" height="100%" src="//www.youtube.com/embed/''' + id + '''?autoplay=1&enablejsapi=1" frameborder="0"
-				allowfullscreen></iframe>
-			'''
+			@player = new YT.Player 'video',
+				height: '100%',
+				width: '100%',
+				videoId: id,
+				events: 
+					onStateChange: _.bind(@stateChange, this),
+					onReady: (e) =>
+						e.target.playVideo()
+						@unblock()
 
 	getID: (url) ->
-		regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/
-		match = url.match regExp
-
-		if match and match[2].length == 11
-			return match[2]
+		try
+			url.match(/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/)[1]
+		catch e
+			console.log url
 
 	next: ->
 		if @current + 1 <= @items.length
@@ -53,6 +64,10 @@ class Radio extends Backbone.View
 		if @current - 1 >= 0
 			@current--
 			@play()
+
+	stateChange: (data) ->
+		if data.data == 0
+			@next()
 
 $ ->
 	new Radio
