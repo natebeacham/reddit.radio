@@ -2,14 +2,6 @@ html, body
 	font-family: segoe ui, arial, sans-serif
 	background: #eee
 
-h1
-	font-style: italic
-	font-weight: normal
-	text-align: center
-	letter-spacing: -1px
-	font-size: 24px
-	line-height: 28px
-
 #tools
 	position: fixed
 	bottom: 0
@@ -17,30 +9,16 @@ h1
 	right: 0
 	height: 40px
 	padding: 10px
-	background: #222
+	background: #1B1B1B
 	text-align: center
 
 #player
-	max-width: 70%
-	margin: 40px auto
-	box-shadow: 0 0 30px rgba(0,0,0,0.4)
-	background: #222
-	height: 320px
-
-	@media (min-height: 500px)
-		height: 400px
-
-	@media (min-height: 600px)
-		height: 500px
-
-	@media (min-height: 700px)
-		height: 600px
-
-	@media (min-height: 800px)
-		height: 700px
-
-	@media (min-height: 900px)
-		height: 800px
+	position: fixed
+	background: #1B1B1B
+	top: 0
+	left: 0
+	right: 0
+	bottom: 60px
 
 #shade
 	position: fixed
@@ -52,12 +30,29 @@ h1
 	z-index: 1001
 
 #status
-	color: #eee
-	font-style: italic
-	text-align: center
+	color: #ccc
+	text-align: right
 	position: absolute
 	right: 20px
-	top: 20px
+	top: 25px
+	font-size: 12px
+
+#story
+	text-align: left
+	position: absolute
+	left: 20px
+	top: 25px
+	max-width: 30%
+	white-space: nowrap
+	text-overflow: ellipsis
+	overflow-x: hidden
+	font-size: 12px
+
+	a
+		color: #ccc
+		text-decoration: none
+		&:hover
+			text-decoration: underline
 
 select
 	padding: 5px

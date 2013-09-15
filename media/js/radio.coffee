@@ -30,9 +30,11 @@ class Radio extends Backbone.View
 		$('#shade').fadeOut()
 
 	play: ->
+		data = @items[@current]
+
 		$('#player').empty().append '<div id="video"></div>'
 
-		$('h1').html(@items[@current].title)
+		$('#story').html("<a href='http://reddit.com#{data.permalink}' target='_blank'>#{data.title}</a>")
 
 		$('#status').html('Playing ' + (@current + 1) + ' of ' + @items.length)
 
@@ -55,12 +57,16 @@ class Radio extends Backbone.View
 		catch e
 			console.log url
 
-	next: ->
+	next: (e) ->
+		e.preventDefault()
+
 		if @current + 1 <= @items.length
 			@current++
 			@play()
 
-	prev: ->
+	prev: (e) ->
+		e.preventDefault()
+
 		if @current - 1 >= 0
 			@current--
 			@play()
