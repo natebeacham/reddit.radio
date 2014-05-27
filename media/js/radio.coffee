@@ -58,14 +58,16 @@ class Radio extends Backbone.View
 			console.log url
 
 	next: (e) ->
-		e.preventDefault()
+		if e
+			e.preventDefault()
 
 		if @current + 1 <= @items.length
 			@current++
 			@play()
 
 	prev: (e) ->
-		e.preventDefault()
+		if e
+			e.preventDefault()
 
 		if @current - 1 >= 0
 			@current--
