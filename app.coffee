@@ -2,7 +2,7 @@ express = require 'express'
 
 app = express()
 
-app.get '/', (req, res) -> 
+app.get '/', (req, res) ->
 	res.sendfile 'templates/index.html'
 
 app.use '/media', express.static 'media'

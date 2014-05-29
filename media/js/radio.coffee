@@ -45,7 +45,7 @@ class Radio extends Backbone.View
 				height: '100%',
 				width: '100%',
 				videoId: id,
-				events: 
+				events:
 					onStateChange: _.bind(@stateChange, this),
 					onReady: (e) =>
 						e.target.playVideo()
