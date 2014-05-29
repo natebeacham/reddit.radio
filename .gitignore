@@ -6,6 +6,9 @@ lib-cov
 *.out
 *.pid
 *.gz
+app.js
+radio.js
+radio.css
 
 pids
 logs

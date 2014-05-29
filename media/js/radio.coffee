@@ -2,7 +2,10 @@ class Radio extends Backbone.View
 	events:
 		'click #next': 'next',
 		'click #prev': 'prev',
+		'click #choose': 'choose',
+		'click .close-button': 'closeDialog',
 		'change #sub-selector': 'load',
+		'keyup #subreddit-input': 'subredditKeyup',
 
 	initialize: ->
 		@setElement $('body')[0]
@@ -15,19 +18,26 @@ class Radio extends Backbone.View
 		@getJSON sub
 
 	getJSON: (sub) ->
-		$.getJSON 'http://www.reddit.com' + sub + '/.json?limit=100&jsonp=?', (response) =>
-			@loadResult response.data.children
+		if (sub)
+			try
+				$.getJSON 'http://www.reddit.com' + sub + '/.json?limit=100&jsonp=?', (response) =>
+					@loadResult response.data.children
+			catch e
+				@unblock()
+				alert("Could not load subreddit :(")
 
 	loadResult: (items) ->
 		@items = (item.data for item in items when item.data.url.indexOf('youtub') != -1)
 		@current = 0
-		@play()
+
+		if @items.length
+			@play()
 
 	block: ->
-		$('#shade').fadeIn()
+		$('#loader').fadeIn()
 
 	unblock: ->
-		$('#shade').fadeOut()
+		$('#loader').fadeOut()
 
 	play: ->
 		data = @items[@current]
@@ -72,6 +82,39 @@ class Radio extends Backbone.View
 		if @current - 1 >= 0
 			@current--
 			@play()
+
+	closeDialog: (e) ->
+		if e
+			e.preventDefault()
+			$(e.currentTarget).parents('.dialog').fadeOut()
+		else
+			$('.dialog').fadeOut()
+
+		$('#shade').hide()
+
+	subredditKeyup: (e) ->
+		if e.which == 27
+			@closeDialog()
+
+		if e.which == 13
+			@loadSubreddit $('#subreddit-input').val()
+
+	loadSubreddit: (subreddit) ->
+		$('#sub-selector')
+			.append("<option value='/r/#{subreddit}'>/r/#{subreddit}</option>")
+			.val("/r/#{subreddit}")
+
+		@closeDialog()
+
+		@load()
+
+	choose: (e) ->
+		if e
+			e.preventDefault()
+
+		$('#subreddit-input').val('')
+		$('#shade').show()
+		$('#choose-dialog').fadeIn()
 
 	stateChange: (data) ->
 		if data.data == 0

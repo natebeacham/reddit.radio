@@ -1,6 +1,21 @@
+@mixin icon($src)
+	background: transparent url(/media/icons/#{$src}.png) no-repeat 50% 50%
+	background-size: 70%
+
 html, body
-	font-family: segoe ui, arial, sans-serif
+	font-family: lato, segoe ui, arial, sans-serif
 	background: #eee
+	font-weight: 400
+
+h1
+	font-weight: 700
+
+a
+	text-decoration: none
+	color: #3271C2
+
+	&:hover
+		text-decoration: underline
 
 #tools
 	position: fixed
@@ -20,20 +35,69 @@ html, body
 	right: 0
 	bottom: 60px
 
-#shade
+#shade, #loader
 	position: fixed
+	display: none
 	top: 0
 	bottom: 0
 	left: 0
 	right: 0
-	background: rgba(255,255,255, 0.9) url(/media/images/kitty.gif) 50% 50% no-repeat
 	z-index: 1001
+
+#loader
+	background: rgba(255,255,255, 0.9) url(/media/images/loader.gif) 50% 50% no-repeat
+	z-index: 1003
+
+#shade
+	background: rgba(0,0,0, 0.8)
+
+.dialog
+	background: #eaeaea
+	padding: 30px
+	width: 600px
+	height: 260px
+	position: fixed
+	top: 50%
+	left: 50%
+	margin-left: -300px
+	margin-top: -200px
+	z-index: 1002
+	border-radius: 10px
+	display: none
+
+	.close-button
+		position: absolute
+		right: 10px
+		top: 10px
+		display: block
+		width: 20px
+		height: 20px
+		background: transparent url(/media/icons/52.png) no-repeat 50% 50%
+		opacity: 0.4
+
+		&:hover
+			opacity: 0.9
+
+#subreddit-input
+	padding: 10px
+	width: 95%
+	border-radius: 7px
+	border: 1px solid #aaa
+	font-size: 26px
+	margin: 10px 0
 
 #status
 	color: #ccc
 	text-align: right
 	position: absolute
-	right: 20px
+	right: 200px
+	top: 25px
+	font-size: 12px
+
+#links
+	color: #ccc
+	position: absolute
+	right: 15px
 	top: 25px
 	font-size: 12px
 
@@ -55,26 +119,62 @@ html, body
 			text-decoration: underline
 
 select
-	padding: 5px
+	padding: 6px
 	border: 1px solid #444
-	background: #333
-	color: #ddd
+	background: #eee
+	color: #333
 	width: 200px
 	display: inline-block
 	outline: none
 
 .button
 	display: inline-block
-	line-height: 26px
-	padding: 5px 15px
+	line-height: 23px
+	padding: 5px 8px
 	margin: 0 5px
 	color: #eee
 	text-shadow: 1px 1px 1px rgba(0,0,0,0.2)
 	box-shadow: 1px 1px 2px rgba(0,0,0,0.1)
 	cursor: pointer
 	text-decoration: none
-	background: #333
+	background: #eee
 	outline: none
 
 	&:hover
-		background: #666
+		background: #ccc
+
+i
+	padding-left: 18px
+	outline: none
+
+	&.icon-only
+		display: inline-block
+		height: 16px
+		line-height: 16px
+
+	&.next
+		+icon(16)
+
+	&.choose
+		+icon(7)
+
+	&.prev
+		+icon(15)
+
+.control-group
+	.button, select
+		margin: 0 -2px
+
+		&:not(:last-child)
+			border-right: none
+
+		&:not(:first-child)
+			border-left: none
+
+::-webkit-input-placeholder
+	color: #aaa
+	font-style: italic
+
+::-moz-placeholder
+	color: #aaa
+	font-style: italic

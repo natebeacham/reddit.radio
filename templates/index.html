@@ -5,6 +5,8 @@
 
 		<link href="/media/css/normalize.css" rel="stylesheet" type="text/css">
 		<link href="/media/css/radio.css" rel="stylesheet" type="text/css">
+		<link rel="shortcut icon" href="/media/images/favicon.png" />
+		<link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic' rel='stylesheet' type='text/css'>
 
 		<script language="javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
 		<script language="javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.1/underscore-min.js"></script>
@@ -15,56 +17,88 @@
 	</head>
 
 	<body>
+		<div id="loader"></div>
 		<div id="shade"></div>
+
+		<div class="dialog" id="choose-dialog">
+			<a class="close-button" href="#"></a>
+
+			<h1>Looking for something else?</h1>
+
+			<p>
+				Enter the name of the subreddit below.
+			</p>
+
+			<p>
+				<input type="text" placeholder='eg: "lampcore"' id="subreddit-input"></input>
+			</p>
+		</div>
 
 		<div id="player"></div>
 
 		<div id="tools">
 			<div id="story"></div>
+				<div class="control-group">
 
-			<a href="#prev" class="button prev" id="prev" title="Previous">&larr;</a>
-			
-			<select id="sub-selector">
-				<option value="/r/music">/r/music</option>
-				<option value="/r/listentothis">/r/listentothis</option>
-				<option value="/r/90srock">/r/90srock</option>
-				<option value="/r/90salternative">/r/90salternative</option>
-				<option value="/r/classicalmusic">/r/classicalmusic</option>
-				<option value="/r/classicrock">/r/classicrock</option>
-				<option value="/r/country">/r/country</option>
-				<option value="/r/indie">/r/indie</option>
-				<option value="/r/indie_rock">/r/indie_rock</option>
-				<option value="/r/postrock">/r/postrock</option>
-				<option value="/r/flocked">/r/flocked</option>
-				<option value="/r/folk">/r/folk</option>
-				<option value="/r/folkrock">/r/folkrock</option>
-				<option value="/r/folktronica">/r/folktronica</option>
-				<option value="/r/metal">/r/metal</option>
-				<option value="/r/metalcore">/r/metalcore</option>
-				<option value="/r/progmetal">/r/progmetal</option>
-				<option value="/r/punk">/r/punk</option>
-				<option value="/r/ska">/r/ska</option>
-				<option value="/r/90shiphop">/r/90shiphop</option>
-				<option value="/r/hiphopheads">/r/hiphopheads</option>
-				<option value="/r/rap">/r/rap</option>
-				<option value="/r/chillout">/r/chillout</option>
-				<option value="/r/dnb">/r/dnb</option>
-				<option value="/r/dubstep">/r/dubstep</option>
-				<option value="/r/electrohouse">/r/electrohouse</option>
-				<option value="/r/electronicmusic">/r/electronicmusic</option>
-				<option value="/r/futurebeats">/r/futurebeats</option>
-				<option value="/r/trance">/r/trance</option>
-				<option value="/r/coversongs">/r/coversongs</option>
-				<option value="/r/pianocovers">/r/pianocovers</option>
-				<option value="/r/remixxd">/r/remixxd</option>
-				<option value="/r/jazz">/r/jazz</option>
-				<option value="/r/kpop">/r/kpop</option>
-				<option value="/r/treemusic">/r/treemusic</option>
-			</select>
+				<a href="#prev" class="button" id="prev" title="Previous">
+					<i class="icon icon-only prev"></i>
+				</a>
 
-			<a href="#next" class="button next" id="next" title="Next">&rarr;</a>
+				<select id="sub-selector">
+					<option value="/r/music">/r/music</option>
+					<option value="/r/listentothis">/r/listentothis</option>
+					<option value="/r/90srock">/r/90srock</option>
+					<option value="/r/90salternative">/r/90salternative</option>
+					<option value="/r/classicalmusic">/r/classicalmusic</option>
+					<option value="/r/classicrock">/r/classicrock</option>
+					<option value="/r/country">/r/country</option>
+					<option value="/r/indie">/r/indie</option>
+					<option value="/r/indie_rock">/r/indie_rock</option>
+					<option value="/r/postrock">/r/postrock</option>
+					<option value="/r/flocked">/r/flocked</option>
+					<option value="/r/folk">/r/folk</option>
+					<option value="/r/folkrock">/r/folkrock</option>
+					<option value="/r/folktronica">/r/folktronica</option>
+					<option value="/r/metal">/r/metal</option>
+					<option value="/r/metalcore">/r/metalcore</option>
+					<option value="/r/progmetal">/r/progmetal</option>
+					<option value="/r/punk">/r/punk</option>
+					<option value="/r/ska">/r/ska</option>
+					<option value="/r/90shiphop">/r/90shiphop</option>
+					<option value="/r/hiphopheads">/r/hiphopheads</option>
+					<option value="/r/rap">/r/rap</option>
+					<option value="/r/chillout">/r/chillout</option>
+					<option value="/r/dnb">/r/dnb</option>
+					<option value="/r/dubstep">/r/dubstep</option>
+					<option value="/r/electrohouse">/r/electrohouse</option>
+					<option value="/r/electronicmusic">/r/electronicmusic</option>
+					<option value="/r/futurebeats">/r/futurebeats</option>
+					<option value="/r/trance">/r/trance</option>
+					<option value="/r/coversongs">/r/coversongs</option>
+					<option value="/r/pianocovers">/r/pianocovers</option>
+					<option value="/r/remixxd">/r/remixxd</option>
+					<option value="/r/jazz">/r/jazz</option>
+					<option value="/r/kpop">/r/kpop</option>
+					<option value="/r/treemusic">/r/treemusic</option>
+				</select>
+
+				<a href="#choose" class="button" id="choose" title="Try your own subreddit">
+					<i class="icon icon-only choose"></i>
+				</a>
+
+				<a href="#next" class="button" id="next" title="Next">
+					<i class="icon icon-only next"></i>
+				</a>
+			</div>
 
 			<div id="status"></div>
+
+			<div id="links">
+				reddit.radio |
+				<a href="https://github.com/natebeacham/reddit.radio" target="_blank">
+					View on Github
+				</a>
+			</div>
 		</div>
 	</body>
 </html>
