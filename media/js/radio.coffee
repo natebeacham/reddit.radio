@@ -15,29 +15,52 @@ class Radio extends Backbone.View
 	load: ->
 		@block()
 		sub = $('#sub-selector').val()
+		@selected = sub
 		@getJSON sub
 
 	getJSON: (sub) ->
 		if (sub)
 			try
+				timeout = setTimeout =>
+					@unblock()
+					@notify 'Could not load subreddit :('
+				, 7000
+
 				$.getJSON 'http://www.reddit.com' + sub + '/.json?limit=100&jsonp=?', (response) =>
+					clearTimeout timeout
 					@loadResult response.data.children
 			catch e
 				@unblock()
-				alert("Could not load subreddit :(")
+				@notify 'Could not load subreddit :('
 
 	loadResult: (items) ->
-		@items = (item.data for item in items when item.data.url.indexOf('youtub') != -1)
+		@items = (item.data for item in items when item.data.url.indexOf('youtub') != -1 and !item.data.is_self)
 		@current = 0
 
 		if @items.length
 			@play()
+			@notify 'Now playing: ' + @selected
+		else
+			@unblock()
+			@notify 'Could not find any videos in this subreddit!'
 
 	block: ->
 		$('#loader').fadeIn()
 
 	unblock: ->
 		$('#loader').fadeOut()
+
+	notify: (message) ->
+		el = $('<div class="notifier"></div>')
+			.text(message)
+			.appendTo($('body'))
+
+		el.click ->
+			el.fadeOut()
+
+		setTimeout ->
+			el.fadeOut()
+		, 5000
 
 	play: ->
 		data = @items[@current]
@@ -60,6 +83,8 @@ class Radio extends Backbone.View
 					onReady: (e) =>
 						e.target.playVideo()
 						@unblock()
+		else
+			@next()
 
 	getID: (url) ->
 		try
